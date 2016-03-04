@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>google_cloud_vision_bridge</name>
+  <version>0.0.0</version>
+  <description>
+    Bridging google cloud vision api to ros
+  </description>
+  <maintainer email="jihoonlee.in@gmail.com">Jihoon Lee</maintainer>
+
+  <license>BSD</license>
+
+  <!-- <url type="website">http://wiki.ros.org/google_cloud_api_bridge</url> -->
+
+  <author>Jihoon Lee</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <run_depend>rospy</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+</package>
