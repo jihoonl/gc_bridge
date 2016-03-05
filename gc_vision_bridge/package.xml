@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>google_cloud_vision_bridge</name>
+  <name>gc_vision_bridge</name>
   <version>0.0.0</version>
   <description>
     Bridging google cloud vision api to ros
