@@ -30,6 +30,13 @@ def generate_default_features():
 
     return features['label']
 
+def print_labels(response):
+    result = response['responses'][0]['labelAnnotations']
+
+    print("= %s\t\t%s ="%("Label","Score"))
+    for r in result:
+        print("%s\t\t%s"%(r['description'], r['score']))
+
 if __name__ == '__main__':
     print "Hello!"
     secret = get_credentials_filepath()
@@ -44,6 +51,10 @@ if __name__ == '__main__':
     
     cv2.imshow('original', cv_image)
     result = gcv_bridge.request_raw(image, features) 
-    print(str(result))
+
+    print_labels(result)
+
     cv2.waitKey(0)                 # Waits forever for user to press any key
     cv2.destroyAllWindows()        # Closes displayed windows
+
+
