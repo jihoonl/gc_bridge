@@ -16,22 +16,13 @@ def get_image_filepath():
 
     return image_filepath
 
-def generate_default_features():
-    features ={}
-        
-    features['all']  = [ {"type":"LABEL_DETECTION", "maxResults": 10},
-                         {"type":"TEXT_DETECTION", "maxResults": 10},
-                         {"type":"FACE_DETECTION", "maxResults": 20}]
-    features['label']  = [ {"type":"LABEL_DETECTION", "maxResults": 10}]
-
-    return features['label']
-
 def print_labels(response):
     result = response['responses'][0]['labelAnnotations']
 
-    print("= %s\t\t%s ="%("Label","Score"))
+    print(" %-20s\t\t%-20s"%("Label","Score"))
+    print("=====================================")
     for r in result:
-        print("%s\t\t%s"%(r['description'], r['score']))
+        print("%-20s\t\t%-20s"%(r['description'], r['score']))
 
 if __name__ == '__main__':
     print "Hello!"
@@ -42,7 +33,7 @@ if __name__ == '__main__':
     cv_image = cv2.imread(img_filepath)
     with open(img_filepath) as f:   
         image = f.read()
-    features = generate_default_features()
+    features = gc_vision_bridge.create_feature_list('LABEL_DETECTION')
     
     cv2.imshow('original', cv_image)
     result = gcv_bridge.request_raw(image, features) 
