@@ -23,6 +23,20 @@ def print_labels(response):
     result = response['responses'][0]
     print json.dumps(result, indent=2, sort_keys=True)
 
+def get_emos(f):
+    emos = {k:v for k, v in f.items() if k.endswith('Likelihood')}
+    emos = {k:v for k, v in emos.items() if v != 'VERY_UNLIKELY'}
+    return emos
+
+def draw_emos(image, f, pos):
+    emos = get_emos(f)
+    if emos:
+        for k,v in emos.items():
+            t = "%s : %s"%(k,v)
+            x = pos[0]
+            y = pos[1]
+            cv2.putText(image, t, (x, y),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
+
 def show_detection(image, response):
 
     result = response['responses'][0]
@@ -35,7 +49,9 @@ def show_detection(image, response):
         box = [(v['x'], v['y']) for v in f['fdBoundingPoly']['vertices']]
         pts = numpy.array(box, numpy.int32)
         pts = pts.reshape((-1,1,2))
-        cv2.polylines(image, [pts], True, (0,255,0))
+        cv2.polylines(image, [pts], True, (0,255,0), thickness=2)
+
+        draw_emos(image, f, box[1])
 
 if __name__ == '__main__':
     print "Hello!"
