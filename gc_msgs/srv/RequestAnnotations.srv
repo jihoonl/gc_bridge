@@ -1,0 +1,4 @@
+sensor_msgs/Image image
+diagnostic_msgs/KeyValue[] features
+---
+string response

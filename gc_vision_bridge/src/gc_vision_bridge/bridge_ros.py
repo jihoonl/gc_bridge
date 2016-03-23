@@ -13,14 +13,11 @@ class VisionBridgeROS(VisionBridge):
 
         self.cv_bridge = CvBridge()
 
-    def request(self, msg):
-        req = self._make_request(msg.image, msg.features)
+    def request(self, image, features):
+        req = self._make_request(image, features)
         resp = self._service.images().annotate(body = req).execute()
         resp_ros = self._convert_to_ros_msg(resp)
         return resp_ros
-
-    def _convert_to_ros_msg(self, resp):
-        return resp
 
     def _make_request(self, image, features):
         '''
