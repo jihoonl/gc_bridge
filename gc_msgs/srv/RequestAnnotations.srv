@@ -1,4 +1,5 @@
 sensor_msgs/Image image
-diagnostic_msgs/KeyValue[] features
+string[] annotations
+int16[] max_results
 ---
 string response

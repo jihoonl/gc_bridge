@@ -9,15 +9,21 @@ class VisionBridgeServiceServer(object):
       Current implementation only accepts one image per request.
       Later, it can be improved to accept multiple images.
     '''
-
     def __init__(self):
         self._srv_name = "get_annotation"
         self._bridge = gc_vision_bridge.VisionBridgeROS()
         self._srv = rospy.Service("get_annotation",gc_srvs.RequestAnnotations, self._process_image)
 
     def _process_image(self, msg):
-        resp = self._bridge.request(msg.image, msg.features)
-        return gc_srvs.RequestAnnotationsResponse(resp)
+        features = self._create_features(msg.annotations, msg.max_results)
+        resp = self._bridge.request(msg.image, features)
+        return gc_srvs.RequestAnnotationsResponse(str(resp))
+
+    def _create_features(self, annotations, max_results):
+        features = []
+        for a, m in zip(annotations, max_results):
+            features.append({"type":a,"maxResults":m})
+        return features
 
     def spin(self):
         rospy.spin()
