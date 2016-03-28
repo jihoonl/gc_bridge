@@ -24,8 +24,7 @@ def get_image():
     cv_image = cv2.imread(image_filepath)
 
     bridge = CvBridge()
-    image_message = bridge.cv2_to_imgmsg(cv_image, encoding="passthrough")
-    image_message.encoding = "bgr8"
+    image_message = bridge.cv2_to_imgmsg(cv_image, encoding="bgr8")
     return image_message, cv_image
 
 def get_emos(f):
@@ -86,4 +85,3 @@ if __name__ == '__main__':
 
     cv2.waitKey(0)                 # Waits forever for user to press any key
     cv2.destroyAllWindows()        # Closes displayed windows
-
