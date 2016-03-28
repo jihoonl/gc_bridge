@@ -8,6 +8,7 @@ import rospy
 import gc_vision_bridge
 import gc_msgs.srv as gc_srvs
 import sensor_msgs.msg as sensor_msgs
+import numpy
 from cv_bridge import CvBridge
 
 
@@ -42,8 +43,9 @@ def draw_emos(image, f, pos):
             cv2.putText(image, t, (x, y),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
 
 def show_detection(image, response):
-    r = json.dumps(response)
-    result = r['responses'][0]
+    
+    resp = eval(response)
+    result = resp['responses'][0]
 
     if not 'faceAnnotations' in result:
         print "No Face"
@@ -57,6 +59,10 @@ def show_detection(image, response):
 
         draw_emos(image, f, box[1])
 
+def print_labels(response):
+    resp = eval(response)
+    result = resp['responses'][0]
+    print json.dumps(result, indent=2, sort_keys=True)
 
 def create_service_request(img):
     req = gc_srvs.RequestAnnotationsRequest()
@@ -73,6 +79,7 @@ if __name__ == '__main__':
     GetAnnotationSrv = rospy.ServiceProxy('get_annotation',gc_srvs.RequestAnnotations)
 
     resp = GetAnnotationSrv(req)
+    print_labels(resp.response)
     show_detection(cv_image, resp.response)
 
     cv2.imshow('modified', cv_image)

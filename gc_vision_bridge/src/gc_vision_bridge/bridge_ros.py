@@ -5,6 +5,7 @@ from io  import BytesIO
 
 from PIL import Image
 from .bridge import VisionBridge
+import ast, json
 
 SCOPE_GOOGLECLOUDAPI = 'https://www.googleapis.com/auth/cloud-platform'
 API_DISCOVERY_FILE = 'https://vision.googleapis.com/$discovery/rest?version=v1'
@@ -19,7 +20,10 @@ class VisionBridgeROS(VisionBridge):
     def request(self, image, features):
         req = self._make_request(image, features)
         resp = self._service.images().annotate(body = req).execute()
-        return resp
+
+        # convert unicode string to ascii
+        r = ast.literal_eval(json.dumps(resp))
+        return r
 
     def _make_request(self, img_msg, features):
         '''

@@ -3,6 +3,7 @@
 import rospy
 import gc_vision_bridge
 import gc_msgs.srv as gc_srvs
+import unicodedata
 
 class VisionBridgeServiceServer(object):
     '''
@@ -17,6 +18,8 @@ class VisionBridgeServiceServer(object):
     def _process_image(self, msg):
         features = self._create_features(msg.annotations, msg.max_results)
         resp = self._bridge.request(msg.image, features)
+
+        # return response as string.
         return gc_srvs.RequestAnnotationsResponse(str(resp))
 
     def _create_features(self, annotations, max_results):
