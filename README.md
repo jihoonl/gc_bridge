@@ -2,7 +2,8 @@
 
 
 ## Google Cloud Vision
-Action Server to query google cloud vision
+
+ROS wrapper service server to query google cloud vision for annotation
 
 ## Preparation
 
@@ -23,9 +24,20 @@ Action Server to query google cloud vision
  > export GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/credentials 
 ```
 
-#### 4. Test 
+#### 4. Test Google Cloud Vision
 
 ```
+  > # setup your ros environment
   > cd gc_vision_bridge/tests 
   > ./test_face.py
+```
+
+#### 5. Test Service Server
+
+```
+  > # setup your ros envionrment
+  > roscore
+  > rosrun gc_vision_bridge srv_server.py
+  
+  > rosrun gc_vision_bridge srv_client.py # or test with your own service call 
 ```
