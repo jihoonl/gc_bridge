@@ -24,7 +24,9 @@ ROS wrapper service server to query google cloud vision for annotation
  > export GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/credentials 
 ```
 
-#### 4. Test Google Cloud Vision
+## Test
+
+### Test Google Cloud Vision
 
 ```
   > # setup your ros environment
@@ -32,7 +34,7 @@ ROS wrapper service server to query google cloud vision for annotation
   > ./test_face.py
 ```
 
-#### 5. Test Service Server
+### Test Service Server
 
 ```
   > # setup your ros envionrment
