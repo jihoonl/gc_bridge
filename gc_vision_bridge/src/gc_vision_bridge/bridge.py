@@ -28,6 +28,10 @@ class VisionBridge(object):
         return credentials
 
     def request_raw(self, image, features):
+        '''
+        :param image: image byte array
+        :param features: feature json
+        '''
         request = {"requests": [{"image": { "content": b64encode(image)}, "features" : features}]}
         resp = self._service.images().annotate(body=request).execute()
         return resp

@@ -12,14 +12,16 @@ SCOPE_GOOGLECLOUDAPI = 'https://www.googleapis.com/auth/cloud-platform'
 API_DISCOVERY_FILE = 'https://vision.googleapis.com/$discovery/rest?version=v1'
 
 class VisionBridgeROS(VisionBridge):
-
     def __init__(self):
         super(VisionBridgeROS, self).__init__()
 
         self.cv_bridge = CvBridge()
 
-    def request(self, image, features):
-        req_img = self._encode_rosimage_to_b64(image)
+    def request(self, image_msg, features):
+        '''
+          encode ros image message to b64ecoded byte array and request to google cloud vision
+        '''
+        req_img = self._encode_rosimage_to_b64(image_msg)
         req_features = self._create_features(features)
         request = {"requests":[{"image": { "content": req_img}, "features": req_features}]}
 
@@ -30,6 +32,9 @@ class VisionBridgeROS(VisionBridge):
         return r
 
     def _encode_rosimage_to_b64(self, image):
+        '''
+          Convert to cv mat-> PIL Image -> Byte array -> b64 encoded bytearray image
+        '''
         img = self.cv_bridge.imgmsg_to_cv2(image, 'rgb8')
         ii = Image.fromarray(img)
         buff = cStringIO.StringIO()
@@ -40,7 +45,10 @@ class VisionBridgeROS(VisionBridge):
         # self._save_test_image(buff)
         return request_image
 
-    def _save_test_image(self, buff):
+    def save_test_image(self, buff):
+        '''
+          save converted image as file
+        '''
         gg = cStringIO.StringIO(buff.getvalue())
         cimg = Image.open(gg)
         cimg.save('hola.jpg','JPEG')

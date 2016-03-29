@@ -11,7 +11,6 @@ import sensor_msgs.msg as sensor_msgs
 import numpy
 from cv_bridge import CvBridge
 
-
 def get_image():
     imgfile = 'royalmo.jpg'
     if len(sys.argv) < 2:
@@ -42,8 +41,7 @@ def draw_emos(image, f, pos):
             cv2.putText(image, t, (x, y),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
 
 def show_detection(image, response):
-    
-    resp = eval(response)
+    resp = eval(response) # convert json string to dict
     result = resp['responses'][0]
 
     if not 'faceAnnotations' in result:
